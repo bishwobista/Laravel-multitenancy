@@ -20,3 +20,5 @@ return new class extends Migration
         });
     }
 };
+//To migrate the landlord database
+//php artisan migrate --path=database/migrations/landlord --database=landlord
