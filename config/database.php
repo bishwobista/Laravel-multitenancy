@@ -34,6 +34,22 @@ return [
     */
 
     'connections' => [
+        'tenant' => [
+            'driver' =>'mysql',
+            'database' => env('TENANT_DB_NAME', null),
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
+        ],
+        'landlord' => [
+            'driver' =>'mysql',
+            'database' => env('LANDLORD_DB_NAME', null),
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
+        ],
 
         'sqlite' => [
             'driver' => 'sqlite',
