@@ -19,7 +19,7 @@ return [
      * This class should extend `Spatie\Multitenancy\TenantFinder\TenantFinder`
      *
      */
-    'tenant_finder' => null,
+    'tenant_finder' => \Spatie\Multitenancy\TenantFinder\DomainTenantFinder::class,
 
     /*
      * These fields are used by tenant:artisan command to match one or more tenant.
@@ -35,17 +35,17 @@ return [
      */
     'switch_tenant_tasks' => [
         // \Spatie\Multitenancy\Tasks\PrefixCacheTask::class,
-        // \Spatie\Multitenancy\Tasks\SwitchTenantDatabaseTask::class,
+         \Spatie\Multitenancy\Tasks\SwitchTenantDatabaseTask::class,
         // \Spatie\Multitenancy\Tasks\SwitchRouteCacheTask::class,
     ],
 
     /*
      * This class is the model used for storing configuration on tenants.
      *
-     * It must be or extend `Spatie\Multitenancy\Models\Tenant::class`
+     * It must be or extend `Spatie\Multitenancy\Models\Tenants::class`
      */
-    'tenant_model' => Tenant::class,
-
+//    'tenant_model' => Tenant::class,
+    'tenant_model' => \App\Models\Tenants::class,
     /*
      * If there is a current tenant when dispatching a job, the id of the current tenant
      * will be automatically set on the job. When the job is executed, the set
