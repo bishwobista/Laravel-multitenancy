@@ -17,6 +17,11 @@ use Spatie\Multitenancy\Models\Tenant;
 
 
 Route::get('/', function () {
+    if(str_contains(url()->current(), '//global')){
+        dd('global');
+    }else{
+        dd('tenant');
+    }
     $currentTenant = null;
     if (Tenant::checkCurrent()) {
         $currentTenant = app('currentTenant');
