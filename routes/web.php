@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LandlordTenantController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,3 +25,6 @@ Route::middleware('tenant')->group(function (){
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::post('/create', [LandlordTenantController::class, 'createTenant'])->name('create');

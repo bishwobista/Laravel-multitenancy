@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Spatie\Multitenancy\Models\Tenant;
 class Tenants extends Tenant
@@ -12,7 +13,7 @@ class Tenants extends Tenant
     use HasFactory;
     protected $guarded = [];
 //    protected $connection = 'landlord';
-    private mixed $database;
+    private mixed $databaseName;
 
     protected static function booted()
     {
@@ -21,18 +22,10 @@ class Tenants extends Tenant
 
     public function createDatabase()
     {
-        $this->database = $this->getDatabaseName();
-
-        DB::enableQueryLog();
-        try {
-
-            DB::statement("create database if not exists $this->database");
-        }catch (QueryException $ex){
-            dump($ex->getMessage());
-        }
-        dump(DB::getQueryLog());
-        //use connection tenant database
-        //"php artisan tenants:artisan "migrate --database=?", $this->db
-        //migrate -> seed test user
+        $databaseName = $this->getDatabaseName();
+        DB::statement("create database if not exists $databaseName");
+//         config('database.connections.tenant.database')= $databaseName;
+//        $this->database = $databaseName;
+//        $this->save();
     }
 }

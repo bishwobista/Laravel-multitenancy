@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Support\Facades\DB;
+use Spatie\Multitenancy\Models\Tenant;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -42,4 +43,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public static function create(array $array)
+    {
+        $currentTenant = Tenant::current();
+
+        // Switch to the tenant's database connection
+        config(['database.connections.tenant.database' => $currentTenant->database]);
+        DB::purge('tenant');
+
+        // Create the user in the tenant's database
+        return static::create([
+            'name' => $array['name'],
+            'email' => $array['email'],
+            'password' => bcrypt($array['password']),
+        ]);
+    }
 }
