@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LandlordTenantController;
 use Illuminate\Support\Facades\Route;
+use Spatie\Multitenancy\Models\Tenant;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +17,18 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    $currentTenant = null;
+    if (Tenant::checkCurrent()) {
+        $currentTenant = app('currentTenant');
+    }
+    return view('welcome', ['tenant' => $currentTenant]);
 });
-Route::middleware('tenant')->group(function (){
 
+
+Route::middleware('tenant')->group(function (){
+    Route::get('/jobs', function(){
+       dispatch(new \App\Jobs\TestJob());
+    });
 });
 
 Auth::routes();
@@ -28,3 +37,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::post('/create', [LandlordTenantController::class, 'createTenant'])->name('create');
+Route::get('/tenants', [LandlordTenantController::class, 'viewTenants'])->name('viewTenants');
+
+Route::get('/users', [LandlordTenantController::class, 'viewTenantUser'])->name('tenantUsers');
+
+

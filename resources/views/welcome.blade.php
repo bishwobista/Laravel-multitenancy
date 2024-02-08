@@ -8,8 +8,9 @@
     <title>Document</title>
 </head>
 <body>
-{{--    {{ app('currentTenant')->name ?? 'Current Tenant' }}--}}
-{{--    {{Auth::user()->name ?? 'Guest'}}--}}
+{{$tenant}}
+@if(!$tenant)
+
 <form method="post" action="{{route('create')}}">
     @csrf
     <input type="text" placeholder="Name" name="name"/> <br/>
@@ -17,5 +18,6 @@
     <input type="text" placeholder="database" name="database"/> <br/>
     <button type="submit" >Create</button>
 </form>
+@endif
 </body>
 </html>

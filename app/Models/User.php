@@ -18,11 +18,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -44,19 +40,4 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public static function create(array $array)
-    {
-        $currentTenant = Tenant::current();
-
-        // Switch to the tenant's database connection
-        config(['database.connections.tenant.database' => $currentTenant->database]);
-        DB::purge('tenant');
-
-        // Create the user in the tenant's database
-        return static::create([
-            'name' => $array['name'],
-            'email' => $array['email'],
-            'password' => bcrypt($array['password']),
-        ]);
-    }
 }
