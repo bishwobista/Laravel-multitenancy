@@ -8,7 +8,10 @@
     <title>Document</title>
 </head>
 <body>
-{{$tenant}}
+<pre>
+    {{$tenant}}
+</pre>
+
 @if(!$tenant)
 
 <form method="post" action="{{route('create')}}">
@@ -18,6 +21,12 @@
     <input type="text" placeholder="database" name="database"/> <br/>
     <button type="submit" >Create</button>
 </form>
+@endif
+
+@if($user)
+    <h1>User : {{$user->email}}</h1>
+@else
+    no user
 @endif
 </body>
 </html>

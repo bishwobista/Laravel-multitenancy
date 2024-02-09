@@ -23,16 +23,18 @@ Route::get('/', function () {
     if (Tenant::checkCurrent()) {
         $currentTenant = app('currentTenant');
     }
-    return view('welcome', ['tenant' => $currentTenant]);
+    return view('welcome', ['tenant' => $currentTenant, 'user' => Auth::user()]);
 });
 
 
 Route::middleware('tenant')->group(function (){
     Route::get('/jobs', function(){dispatch(new \App\Jobs\TestJob()); });
-    Auth::routes();
+
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::get('/users', [LandlordTenantController::class, 'viewTenantUser'])->name('tenantUsers');
+
+    Auth::routes();
 });
 
 Route::middleware('landlord')->group(function (){
