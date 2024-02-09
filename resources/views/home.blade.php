@@ -19,5 +19,18 @@
             </div>
         </div>
     </div>
+    <hr/>
+    <form method="post" action="{{route('fileUpload')}}" enctype="multipart/form-data" >
+        @csrf
+        <input
+            type="file"
+            name="uploaded_file"
+            accept="image/*"
+        >
+        <button type="submit">Upload</button>
+    </form>
+    @if($error)
+        {{$error}}
+    @endif
 </div>
 @endsection

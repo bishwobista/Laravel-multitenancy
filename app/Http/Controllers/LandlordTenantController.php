@@ -5,6 +5,9 @@ use App\Models\Tenants;
 use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\File;
 use Spatie\Multitenancy\Models\Tenant;
 use Illuminate\Http\Request;
 
@@ -47,4 +50,21 @@ class LandlordTenantController extends Controller
         $users = User::all();
         return view('tenantUsers', ['users' => $users]);
     }
+
+    public function fileUpload(Request $request){
+        $validator = Validator::make($request->all(),[
+            'uploaded_file' => ['required', File::image()]
+        ]);
+        if ($validator->fails()) {
+            return redirect()->route('home')->with('error', $validator->errors()->first());
+        }
+        $data = $validator->validated();
+        $file = $request->file('uploaded_file');
+        $tenantId = Tenant::current()->id;
+        $fileName = $tenantId . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+//        Storage::disk('local')->put('example.txt', 'Contents');
+        $file->storeAs('tenant_'. $tenantId, $fileName);
+        return redirect()->route('home')->with('error', 'File uploaded successfully.');
+    }
+
 }

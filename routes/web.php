@@ -33,7 +33,7 @@ Route::middleware('tenant')->group(function (){
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::get('/users', [LandlordTenantController::class, 'viewTenantUser'])->name('tenantUsers');
-
+    Route::post('/fileUpload', [LandlordTenantController::class, 'fileUpload'])->name('fileUpload');
     Auth::routes();
 });
 
