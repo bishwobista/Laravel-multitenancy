@@ -64,6 +64,9 @@ class LandlordTenantController extends Controller
         $fileName = $tenantId . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
 //        Storage::disk('local')->put('example.txt', 'Contents');
         $file->storeAs('tenant_'. $tenantId, $fileName);
+        $user = User::find(auth()->id());
+        $user->image = $fileName;
+        $user->save();
         return redirect()->route('home')->with('error', 'File uploaded successfully.');
     }
 
