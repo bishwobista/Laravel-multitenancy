@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LandlordTenantController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Spatie\Multitenancy\Models\Tenant;
 
@@ -17,11 +18,7 @@ use Spatie\Multitenancy\Models\Tenant;
 
 
 Route::get('/', function () {
-    if(str_contains(url()->current(), '//global')){
-        dd('global');
-    }else{
-        dd('tenant');
-    }
+
     $currentTenant = null;
     if (Tenant::checkCurrent()) {
         $currentTenant = app('currentTenant');
@@ -31,19 +28,24 @@ Route::get('/', function () {
 
 
 Route::middleware('tenant')->group(function (){
-    Route::get('/jobs', function(){
-       dispatch(new \App\Jobs\TestJob());
-    });
+    Route::get('/jobs', function(){dispatch(new \App\Jobs\TestJob()); });
+    Auth::routes();
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::get('/users', [LandlordTenantController::class, 'viewTenantUser'])->name('tenantUsers');
 });
 
-Auth::routes();
+Route::middleware('landlord')->group(function (){
+    Route::post('/create', [LandlordTenantController::class, 'createTenant'])->name('create');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/tenants', [LandlordTenantController::class, 'viewTenants'])->name('viewTenants');
+});
 
 
-Route::post('/create', [LandlordTenantController::class, 'createTenant'])->name('create');
-Route::get('/tenants', [LandlordTenantController::class, 'viewTenants'])->name('viewTenants');
 
-Route::get('/users', [LandlordTenantController::class, 'viewTenantUser'])->name('tenantUsers');
+
+
+
+
 
 
