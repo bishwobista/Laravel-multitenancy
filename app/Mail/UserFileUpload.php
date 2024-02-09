@@ -19,10 +19,11 @@ class UserFileUpload extends Mailable
      * Create a new message instance.
      */
     public $image;
+    public $user;
     public function __construct($user)
     {
         $this->image = Storage::url('tenant_'. Tenant::current()->id. '/'.$user->image);
-
+        $this->user = $user;
     }
 
     /**

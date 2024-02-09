@@ -24,9 +24,12 @@
 @endif
 
 @if($user)
-    <h1>User : {{$user->email}}</h1>
+    <h1>User : {{$user->email}}</h1>, <a href="/home">Home</a>
 @else
-    no user
+    no user,
+    <a href="/login">Login</a>
 @endif
+
+
 </body>
 </html>

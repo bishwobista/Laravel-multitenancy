@@ -1,6 +1,7 @@
 <x-email-layout
 :image="asset($image)"
-    title="Thanks for entering!"
+    title="Thanks for uploading!"
 >
-   hi
+   Hi {{$user->name}}, <br/>
+    Your Tenant: {{app('currentTenant')->name}}
 </x-email-layout>
