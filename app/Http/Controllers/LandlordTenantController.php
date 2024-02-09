@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Mail\UserFileUpload;
 use App\Models\Tenants;
 use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\File;
@@ -67,6 +69,7 @@ class LandlordTenantController extends Controller
         $user = User::find(auth()->id());
         $user->image = $fileName;
         $user->save();
+        Mail::to($user->email)->send(new UserFileUpload($user));
         return redirect()->route('home')->with('error', 'File uploaded successfully.');
     }
 
