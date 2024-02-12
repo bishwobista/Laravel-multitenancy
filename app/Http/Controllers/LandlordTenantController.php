@@ -5,6 +5,7 @@ use App\Mail\UserFileUpload;
 use App\Models\Tenants;
 use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -16,9 +17,10 @@ use Illuminate\Http\Request;
 class LandlordTenantController extends Controller
 {
     public function createTenant(Request $request){
-        if(app('currentTenant')){
-            return view('welcome', ['tenant' => app('currentTenant')]);
-        }
+
+//        if(app('currentTenant')){
+//            return view('welcome', ['tenant' => app('currentTenant')]);
+//        }
         $validatedData = $request->validate([
             'name' => ['required', 'string'],
             'domain' => ['required', 'string'],
@@ -71,6 +73,11 @@ class LandlordTenantController extends Controller
         $user->save();
         Mail::to($user->email)->send(new UserFileUpload($user));
         return redirect()->route('home')->with('error', 'File uploaded successfully.');
+    }
+
+    public function cache(){
+      cache()->put('key', Tenant::current()->getDatabaseName());
+        return cache()->get('key');
     }
 
 }

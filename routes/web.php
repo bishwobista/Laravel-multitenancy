@@ -28,6 +28,7 @@ Route::get('/', function () {
 
 
 Route::middleware('tenant')->group(function (){
+    Route::get('/cache',[LandlordTenantController::class, 'cache'])->name('cache');
     Route::get('/jobs', function(){dispatch(new \App\Jobs\TestJob()); });
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -38,16 +39,7 @@ Route::middleware('tenant')->group(function (){
 });
 
 Route::middleware('landlord')->group(function (){
-    Route::post('/create', [LandlordTenantController::class, 'createTenant'])->name('create');
 
+    Route::post('/create', [LandlordTenantController::class, 'createTenant'])->name('create');
     Route::get('/tenants', [LandlordTenantController::class, 'viewTenants'])->name('viewTenants');
 });
-
-
-
-
-
-
-
-
-

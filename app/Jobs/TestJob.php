@@ -7,6 +7,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Spatie\Multitenancy\Models\Tenant;
 
 class TestJob implements ShouldQueue
@@ -26,8 +28,25 @@ class TestJob implements ShouldQueue
      */
     public function handle(): void
     {
+
         $tenant = Tenant::current();
-        info("Hello from tenant $tenant->name");
-        info ('using database' .config('database.connections.tenant.database'));
+
+        $logPath = storage_path('logs/tenants/' . $tenant->id . '/tenant.log');
+
+        if (!file_exists(dirname($logPath))) {
+            if (!mkdir($concurrentDirectory = dirname($logPath), 0755, true) && !is_dir($concurrentDirectory)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+            }
+        }
+        config([
+            'logging.channels.tenant_log' => [
+                'driver' => 'single',
+                'path' => $logPath,
+                'level' => 'info',
+            ]
+        ]);
+
+        Log::channel('tenant_log')->info("Hello from tenant $tenant->name");
+        Log::channel('tenant_log')->info('Using database ' . config('database.connections.tenant.database'));
     }
 }

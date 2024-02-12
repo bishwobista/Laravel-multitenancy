@@ -8,6 +8,7 @@
     <title>Document</title>
 </head>
 <body>
+
 <pre>
     {{$tenant}}
 </pre>
@@ -21,13 +22,14 @@
     <input type="text" placeholder="database" name="database"/> <br/>
     <button type="submit" >Create</button>
 </form>
-@endif
+@else
 
 @if($user)
-    <h1>User : {{$user->email}}</h1>, <a href="/home">Home</a>
+    <h1>User : {{$user->email}}</h1> <a href="/home">Home</a>
 @else
     no user,
     <a href="/login">Login</a>
+@endif
 @endif
 
 
