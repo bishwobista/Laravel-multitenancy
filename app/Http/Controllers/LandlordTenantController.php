@@ -76,13 +76,15 @@ class LandlordTenantController extends Controller
     }
 
     public function cache(){
-      cache()->put('key' . Tenant::current()->id, Tenant::current()->getDatabaseName(), now()->addMinute());
-
+        $tenant = Tenant::current();
+        $tenant->makeCurrent();
+        cache()->put('key', $tenant->getDatabaseName());
     }
-    public function getCache(){
-        Cache::forever('a', 'a');
-        return Cache::get('key'. Tenant::current()->id);
 
+    public function getCache(){
+        $tenant = Tenant::current();
+        $tenant->makeCurrent();
+        return cache('key');
     }
 
 }
