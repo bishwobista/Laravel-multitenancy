@@ -105,7 +105,7 @@ return [
      * Jobs tenant aware even if these don't implement the TenantAware interface.
      */
     'tenant_aware_jobs' => [
-        // ...
+
     ],
 
     /*

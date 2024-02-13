@@ -31,17 +31,17 @@ class TestJob implements ShouldQueue
 
         $tenant = Tenant::current();
 
-        $logPath = storage_path('logs/tenants/' . $tenant->id . '/tenant.log');
+        $path = storage_path('logs/tenants/' . $tenant->id . '/tenant.log');
 
-        if (!file_exists(dirname($logPath))) {
-            if (!mkdir($concurrentDirectory = dirname($logPath), 0755, true) && !is_dir($concurrentDirectory)) {
+        if (!file_exists(dirname($path))) {
+            if (!mkdir($concurrentDirectory = dirname($path), 0755, true) && !is_dir($concurrentDirectory)) {
                 throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
             }
         }
         config([
             'logging.channels.tenant_log' => [
                 'driver' => 'single',
-                'path' => $logPath,
+                'path' => $path,
                 'level' => 'info',
             ]
         ]);
