@@ -20,6 +20,8 @@ use App\Jobs\TenantJob;
 
 Route::get('/mail', function (){
     Landlord::execute(fn()=> TenantJob::dispatch());
+
+
 });
 
 
