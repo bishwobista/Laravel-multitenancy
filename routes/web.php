@@ -2,11 +2,8 @@
 
 use App\Http\Controllers\LandlordTenantController;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Spatie\Multitenancy\Models\Tenant;
-use Spatie\Multitenancy\Landlord;
-use App\Jobs\TenantJob;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,19 +14,6 @@ use App\Jobs\TenantJob;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/mail', function (){
-    Landlord::execute(fn()=> TenantJob::dispatch());
-
-
-});
-
-
-
-
-
-
-
 
 Route::get('/', function () {
 
@@ -51,6 +35,7 @@ Route::middleware('tenant')->group(function (){
     Route::get('/users', [LandlordTenantController::class, 'viewTenantUser'])->name('tenantUsers');
     Route::post('/fileUpload', [LandlordTenantController::class, 'fileUpload'])->name('fileUpload');
     Auth::routes();
+    Route::get('/mail', [LandlordTenantController::class, 'mailJob']);
 
 });
 

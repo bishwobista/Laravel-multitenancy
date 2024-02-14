@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('QUEUE_CONNECTION', 'sync'),
+    'default' => env('QUEUE_CONNECTION', 'database'),
 
     /*
     |--------------------------------------------------------------------------
@@ -40,6 +40,7 @@ return [
             'queue' => 'default',
             'retry_after' => 90,
             'after_commit' => false,
+            'connection' =>env('LANDLORD_DB_NAME'),
         ],
 
         'beanstalkd' => [

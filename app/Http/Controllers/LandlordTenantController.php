@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Jobs\TenantJob;
 use App\Mail\UserFileUpload;
 use App\Models\Tenants;
 use App\Models\User;
@@ -11,11 +12,19 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\File;
+use Spatie\Multitenancy\Landlord;
 use Spatie\Multitenancy\Models\Tenant;
 use Illuminate\Http\Request;
 
 class LandlordTenantController extends Controller
 {
+    public function mailJob(){
+        Tenant::current()->execute(fn()=>
+           Landlord::execute(fn()=> TenantJob::dispatch())
+        );
+        return back();
+    }
+
     public function createTenant(Request $request){
 
 //        if(app('currentTenant')){
@@ -86,5 +95,6 @@ class LandlordTenantController extends Controller
         $tenant->makeCurrent();
         return cache('key');
     }
+
 
 }
