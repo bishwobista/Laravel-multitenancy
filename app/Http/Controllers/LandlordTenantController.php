@@ -22,7 +22,6 @@ class LandlordTenantController extends Controller
         Tenant::current()->execute(fn()=>
            Landlord::execute(fn()=> TenantJob::dispatch())
         );
-        return back();
     }
 
     public function createTenant(Request $request){
