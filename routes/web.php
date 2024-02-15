@@ -24,6 +24,7 @@ Route::get('/', function () {
     return view('welcome', ['tenant' => $currentTenant, 'user' => Auth::user()]);
 });
 
+Auth::routes();
 
 Route::middleware('tenant')->group(function (){
     Route::get('/cache',[LandlordTenantController::class, 'cache'])->name('cache');
@@ -34,7 +35,7 @@ Route::middleware('tenant')->group(function (){
 
     Route::get('/users', [LandlordTenantController::class, 'viewTenantUser'])->name('tenantUsers');
     Route::post('/fileUpload', [LandlordTenantController::class, 'fileUpload'])->name('fileUpload');
-    Auth::routes();
+
     Route::get('/mail', [LandlordTenantController::class, 'mailJob']);
 
 });
@@ -43,4 +44,5 @@ Route::middleware('landlord')->group(function (){
 
     Route::post('/create', [LandlordTenantController::class, 'createTenant'])->name('create');
     Route::get('/tenants', [LandlordTenantController::class, 'viewTenants'])->name('viewTenants');
+
 });
