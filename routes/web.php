@@ -27,7 +27,7 @@ Route::get('/', function () {
 
 Route::middleware('tenant')->group(function (){
     Route::get('/cache',[LandlordTenantController::class, 'cache'])->name('cache');
-    Route::get('/getCache',[LandlordTenantController::class, 'getCache'])->name('getCache');
+    Route::get('/getcache',[LandlordTenantController::class, 'getCache'])->name('getCache');
     Route::get('/jobs', function(){dispatch(new \App\Jobs\TestJob()); });
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

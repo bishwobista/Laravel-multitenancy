@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use http\Exception;
+use Exception;
 use Illuminate\Http\Request;
 use Spatie\Multitenancy\Exceptions\NoCurrentTenant;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,11 +15,12 @@ class Landlord
      *
      * @param Closure(Request): (Response) $next
      * @throws NoCurrentTenant
+     * @throws Exception
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!str_contains(url()->current(), '/global.local')){
-            throw NoCurrentTenant::landlord();
+        if(!str_contains(url()->current(), '/global.org')){
+            throw new Exception("sorry");
         }
         return $next($request);
     }
