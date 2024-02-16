@@ -10,7 +10,7 @@
 <body>
 @if(!$tenant)
 
-<form method="post" action="{{route('create')}}">
+<form method="post" action="{{route('landlord.create')}}">
     @csrf
     <input type="text" placeholder="Name" name="name"/> <br/>
     <input type="text" placeholder="Domain" name="domain"/> <br/>

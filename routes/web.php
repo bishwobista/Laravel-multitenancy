@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\LandlordAuth;
+use App\Http\Controllers\LandlordAuthController;
 use App\Http\Controllers\LandlordTenantController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -42,15 +42,6 @@ Route::middleware('tenant')->group(function (){
 });
 
 Route::middleware('landlord')->group(function (){
-
-    Route::post('/create', [LandlordTenantController::class, 'createTenant'])->name('create');
-    Route::get('/tenants', [LandlordTenantController::class, 'viewTenants'])->name('viewTenants');
-    Route::controller(LandlordAuth::class)->group(function (){
-       Route::get('/register', 'register')->name('register');
-       Route::post('/store', 'store')->name('store');
-       Route::get('login', 'login')->name('login');
-       Route::post('/auth', 'auth')->name('auth');
-       Route::get('/dashboard', 'dashboard')->name('dashboard');
-       Route::post('/logout')->name('logout');
-    });
+//    Route::post('/create', [LandlordTenantController::class, 'createTenant'])->name('create');
+//    Route::get('/tenants', [LandlordTenantController::class, 'viewTenants'])->name('viewTenants');
 });

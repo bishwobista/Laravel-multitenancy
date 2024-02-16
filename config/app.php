@@ -18,6 +18,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'landlord_url'=>env('LANDLORD_URL'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

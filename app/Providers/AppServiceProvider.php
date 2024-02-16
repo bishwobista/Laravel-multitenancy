@@ -11,7 +11,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        if (config('app.landlord_url') === request()->getSchemeAndHttpHost()) {
+            config(['database.default' => 'landlord']);
+        }
+
     }
 
     /**

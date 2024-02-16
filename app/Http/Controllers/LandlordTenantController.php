@@ -26,9 +26,6 @@ class LandlordTenantController extends Controller
 
     public function createTenant(Request $request){
 
-//        if(app('currentTenant')){
-//            return view('welcome', ['tenant' => app('currentTenant')]);
-//        }
         $validatedData = $request->validate([
             'name' => ['required', 'string'],
             'domain' => ['required', 'string'],
@@ -54,7 +51,7 @@ class LandlordTenantController extends Controller
     public function viewTenants()
     {
         $tenants = Tenants::all();
-        return view('tenants', compact('tenants'));
+        return view('landlord.tenants', compact('tenants'));
     }
 
     public function viewTenantUser(){

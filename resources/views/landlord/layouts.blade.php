@@ -17,30 +17,31 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
-                @guest
-                    <li class="nav-item">
-                        <a class="nav-link {{ (request()->is('login')) ? 'active' : '' }}" href="{{ route('login') }}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ (request()->is('register')) ? 'active' : '' }}" href="{{ route('register') }}">Register</a>
-                    </li>
-                @else
+
+                @auth('landlord')
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ Auth::user()->name }}
+                            {{ auth('landlord')->user()->name }}
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('logout') }}"
+                            <li><a class="dropdown-item" href="{{ route('landlord.logout') }}"
                                    onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();"
                                 >Logout</a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                <form id="logout-form" action="{{ route('landlord.logout') }}" method="POST">
                                     @csrf
                                 </form>
                             </li>
                         </ul>
                     </li>
-                @endguest
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link {{ (request()->is('landlord.login')) ? 'active' : '' }}" href="{{ route('landlord.login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ (request()->is('landlord.register')) ? 'active' : '' }}" href="{{ route('landlord.register') }}">Register</a>
+                    </li>
+                @endauth
             </ul>
         </div>
     </div>

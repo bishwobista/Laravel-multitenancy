@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Testing\Fluent\Concerns\Has;
 
-class LandlordAuth extends Controller
+class LandlordAuthController extends Controller
 {
     public function __construct(){
         //add guest middleware to all routes except logout and dashboard
@@ -24,10 +24,10 @@ class LandlordAuth extends Controller
     public function store(Request $request){
         $request->validate([
             'name' => 'required|string|max:250',
-            'email' => 'required|email|max:250|unique:users',
+            'email' => 'required|email|max:250',
             'password' => 'required|min:8|confirmed'
         ]);
-//        DB::connection('landlord')->table('users')->insert
+
         User::create([
            'name' => $request->name,
            'email' => $request->email,
