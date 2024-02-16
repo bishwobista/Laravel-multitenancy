@@ -33,4 +33,5 @@ Route::middleware('tenant')->group(function (){
     Route::get('/users', [LandlordTenantController::class, 'viewTenantUser'])->name('tenantUsers');
     Route::post('/fileUpload', [LandlordTenantController::class, 'fileUpload'])->name('fileUpload');
     Route::get('/mail', [LandlordTenantController::class, 'mailJob']);
+
 });
