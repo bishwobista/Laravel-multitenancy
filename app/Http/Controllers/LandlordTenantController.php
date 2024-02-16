@@ -95,5 +95,4 @@ class LandlordTenantController extends Controller
         return cache('key');
     }
 
-
 }

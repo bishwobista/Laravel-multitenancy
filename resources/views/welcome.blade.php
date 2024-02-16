@@ -8,11 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-
-<pre>
-    {{$tenant}}
-</pre>
-
 @if(!$tenant)
 
 <form method="post" action="{{route('create')}}">

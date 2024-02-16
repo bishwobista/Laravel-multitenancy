@@ -20,7 +20,9 @@ class Landlord
     public function handle(Request $request, Closure $next): Response
     {
         if(!str_contains(url()->current(), '/global.org')){
-            throw new Exception("sorry");
+            throw new Exception("Error, use landlord route");
+        }else{
+            config(['database.default' => 'landlord']);
         }
         return $next($request);
     }

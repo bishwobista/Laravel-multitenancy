@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LandlordAuth;
 use App\Http\Controllers\LandlordTenantController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +25,7 @@ Route::get('/', function () {
     return view('welcome', ['tenant' => $currentTenant, 'user' => Auth::user()]);
 });
 
-Auth::routes();
+
 
 Route::middleware('tenant')->group(function (){
     Route::get('/cache',[LandlordTenantController::class, 'cache'])->name('cache');
@@ -37,12 +38,19 @@ Route::middleware('tenant')->group(function (){
     Route::post('/fileUpload', [LandlordTenantController::class, 'fileUpload'])->name('fileUpload');
 
     Route::get('/mail', [LandlordTenantController::class, 'mailJob']);
-
+//    Auth::routes();
 });
 
 Route::middleware('landlord')->group(function (){
 
     Route::post('/create', [LandlordTenantController::class, 'createTenant'])->name('create');
     Route::get('/tenants', [LandlordTenantController::class, 'viewTenants'])->name('viewTenants');
-
+    Route::controller(LandlordAuth::class)->group(function (){
+       Route::get('/register', 'register')->name('register');
+       Route::post('/store', 'store')->name('store');
+       Route::get('login', 'login')->name('login');
+       Route::post('/auth', 'auth')->name('auth');
+       Route::get('/dashboard', 'dashboard')->name('dashboard');
+       Route::post('/logout')->name('logout');
+    });
 });
