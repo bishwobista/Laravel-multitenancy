@@ -12,9 +12,15 @@
 
 <form method="post" action="{{route('landlord.create')}}">
     @csrf
-    <input type="text" placeholder="Name" name="name"/> <br/>
-    <input type="text" placeholder="Domain" name="domain"/> <br/>
-    <input type="text" placeholder="database" name="database"/> <br/>
+    <label>
+        <input type="text" placeholder="Name" name="name"/>
+    </label> <br/>
+    <label>
+        <input type="text" placeholder="Domain" name="domain"/>
+    </label> <br/>
+    <label>
+        <input type="text" placeholder="database" name="database"/>
+    </label> <br/>
     <button type="submit" >Create</button>
 </form>
 @else
