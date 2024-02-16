@@ -7,7 +7,7 @@ Route::name('landlord.')->group(function () {
         Route::get('/register', 'register')->name('register');
         Route::post('/store', 'store')->name('store');
 
-        Route::get('login', 'login')->name('login');
+        Route::get('/login', 'login')->name('login');
         Route::post('/auth', 'auth')->name('auth');
     });
 
